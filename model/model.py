@@ -38,9 +38,14 @@ class Model:
             --> Ogni Tour ha un set di Attrazione.
             --> Ogni Attrazione ha un set di Tour.
         """
-
         # TODO
-
+        relazioni=TourDAO.get_tour_attrazioni()
+        for relazione in relazioni:
+            self.tour_map[relazione['id_tour']].attrazioni.add(self.attrazioni_map[relazione['id_attrazione']])
+            self.attrazioni_map[relazione['id_attrazione']].tour.add(self.tour_map[relazione['id_tour']])
+        print(self.tour_map)
+        print(self.attrazioni_map)
+        return self.tour_map, self.attrazioni_map
     def genera_pacchetto(self, id_regione: str, max_giorni: int = None, max_budget: float = None):
         """
         Calcola il pacchetto turistico ottimale per una regione rispettando i vincoli di durata, budget e attrazioni uniche.
